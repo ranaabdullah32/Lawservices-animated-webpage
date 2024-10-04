@@ -24,3 +24,4 @@ document.getElementById('searchIcon').addEventListener('click', function() {
         searchDropdown.style.display = 'none'; // Hide dropdown
     }
 });
+

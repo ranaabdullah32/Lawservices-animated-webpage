@@ -1139,26 +1139,41 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-// Get the button
-const scrollTopBtn = document.getElementById("scrollTopBtn");
+    
+    document.addEventListener("DOMContentLoaded", function() {
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
 
-// Show the button when scrolling down
-window.onscroll = function() {
-    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        scrollTopBtn.style.display = "block";
-    } else {
-        scrollTopBtn.style.display = "none";
+    // Initial state: hide the button
+    scrollTopBtn.style.display = "none";
+
+    // Show the button when scrolling down
+    window.onscroll = function() {
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+            scrollTopBtn.style.display = "block";
+        } else {
+            scrollTopBtn.style.display = "none";
+        }
+    };
+
+    // Scroll to top when the button is clicked
+    scrollTopBtn.onclick = function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Smooth scrolling
+        });
+    };
+});
+window.onload = function checkStorage (){
+    const useremail =localStorage.getItem('userEmail');
+    const userPassword = localStorage.getItem('userPassword') 
+    if (!useremail || !userPassword){
+        window.location.href = 'login.html';
     }
-};
+    else{
+        return false ;
+    }
 
-// Scroll to top when the button is clicked
-scrollTopBtn.onclick = function() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth' // Smooth scrolling
-    });
-};
-
+}
 </script>
 
 </body>

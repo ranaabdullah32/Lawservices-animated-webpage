@@ -1560,6 +1560,6 @@ h2.caption-heading {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 .scroll-top  i.fa.fa-angle-up {
-    padding-left: 38%;
-    padding-top: 33%;
+    margin-left: 38%;
+    margin-top: 33%;
 }
