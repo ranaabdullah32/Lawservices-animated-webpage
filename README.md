@@ -5,7 +5,6 @@ Welcome to the Law Services Animated Webpage! This project showcases an engaging
 ## Table of Contents
 
 - [Features](#features)
-- [Demo](#demo)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
