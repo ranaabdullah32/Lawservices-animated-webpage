@@ -257,6 +257,18 @@
     <section class="about-us">
         <div class="container">
             <div class="row">
+                <table class="table table-dark p-3" >
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Rating</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Price</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablerow"></tbody>
+                  </table>
                 <div class="col-left">
                     <div class="text-block">
                         <h4>Recent Case Study</h4>
@@ -1163,6 +1175,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     };
 });
+//Check if loclStorage is Empty 
 window.onload = function checkStorage (){
     const useremail =localStorage.getItem('userEmail');
     const userPassword = localStorage.getItem('userPassword') 
@@ -1174,6 +1187,18 @@ window.onload = function checkStorage (){
     }
 
 }
+//Fetch Data using Api
+fetch('https://dummyjson.com/products')
+.then(response => response.json())
+    .then(res => {
+        let data = res.products ;
+        let rows = '';
+        data.forEach(product =>  {
+        rows += `<tr><td>${product.id}</td><td>${product.category}</td><td>${product.rating}</td><td>${product.stock}</td><td>${product.price}</td></tr>`;
+        })
+        document.getElementById('tablerow').innerHTML = rows ;
+    })
+    .catch(error => console.log(error))
 </script>
 
 </body>

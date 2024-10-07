@@ -25,3 +25,4 @@ document.getElementById('searchIcon').addEventListener('click', function() {
     }
 });
 
+
