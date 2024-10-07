@@ -257,6 +257,7 @@
     <section class="about-us">
         <div class="container">
             <div class="row">
+                <h2 style="text-align: center ;margin-bottom: 20px;">Our Products</h2>
                 <table class="table table-dark p-3" >
                     <thead>
                       <tr>
@@ -269,6 +270,11 @@
                     </thead>
                     <tbody id="tablerow"></tbody>
                   </table>
+                  <div id="pagination-controls">
+                    <button id="prev-btn" disabled>Previous</button>
+                    <span id="page-info"></span>
+                    <button id="next-btn">Next</button>
+                </div>
                 <div class="col-left">
                     <div class="text-block">
                         <h4>Recent Case Study</h4>
@@ -1003,7 +1009,8 @@
   
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="Js/script.js"></script>
   <script src="Js/jquery.min.js"></script>
   <script src="Js/owl.carousel.js"></script>
@@ -1166,8 +1173,7 @@ document.addEventListener('DOMContentLoaded', function () {
             scrollTopBtn.style.display = "none";
         }
     };
-
-    // Scroll to top when the button is clicked
+ // Scroll to top when the button is clicked
     scrollTopBtn.onclick = function() {
         window.scrollTo({
             top: 0,
@@ -1185,20 +1191,48 @@ window.onload = function checkStorage (){
     else{
         return false ;
     }
-
+   
 }
 //Fetch Data using Api
+const itemsPerPage = 10;
+let currentPage = 1;
+let allProducts = [];
+
 fetch('https://dummyjson.com/products')
-.then(response => response.json())
-    .then(res => {
-        let data = res.products ;
-        let rows = '';
-        data.forEach(product =>  {
-        rows += `<tr><td>${product.id}</td><td>${product.category}</td><td>${product.rating}</td><td>${product.stock}</td><td>${product.price}</td></tr>`;
-        })
-        document.getElementById('tablerow').innerHTML = rows ;
-    })
-    .catch(error => console.log(error))
+    .then(res => res.json())
+    .then(data => {
+        allProducts = data.products;
+        renderTable();
+        updatePagination();
+    });
+
+function renderTable() {
+    const start = (currentPage - 1) * itemsPerPage;
+    const paginatedProducts = allProducts.slice(start, start + itemsPerPage);
+    document.getElementById('tablerow').innerHTML = paginatedProducts.map(product =>
+        `<tr><td>${product.id}</td><td>${product.category}</td><td>${product.rating}</td><td>${product.stock}</td><td>${product.price}</td></tr>`
+    ).join('');
+}
+
+function updatePagination() {
+    const totalPages = Math.ceil(allProducts.length / itemsPerPage);
+    document.getElementById('page-info').innerText = `Page ${currentPage} of ${totalPages}`;
+    document.getElementById('prev-btn').disabled = currentPage === 1;
+    document.getElementById('next-btn').disabled = currentPage === totalPages;
+}
+
+document.getElementById('prev-btn').onclick = () => {
+    if (currentPage > 1) currentPage--;
+    renderTable();
+    updatePagination();
+};
+
+document.getElementById('next-btn').onclick = () => {
+    if (currentPage < Math.ceil(allProducts.length / itemsPerPage)) currentPage++;
+    renderTable();
+    updatePagination();
+};
+
 </script>
 
 </body>

@@ -1563,3 +1563,32 @@ h2.caption-heading {
     margin-left: 38%;
     margin-top: 33%;
 }
+.table-dark {
+    background-color: #000 !important; /* Black background for the table */
+    color: #fff !important; /* White text color */
+  }
+
+  .table-dark th {
+    background-color: #e4353a !important; /* Dark red background for the header */
+    color: #fff !important; /* White text for the header */
+  }
+
+  .table-dark tbody tr {
+    background-color: #333 !important; /* Darker shade for rows */
+  }
+
+  .table-dark tbody tr:hover {
+    background-color: #e4353a !important; /* Highlight color for row on hover */
+  }
+
+  .table-dark td {
+    color: #fff !important; /* White text color for table cells */
+  }
+
+
+  .table-dark th, .table-dark td {
+    text-align: center !important;
+    border: 2px solid white; /* Dark red border for header and cells */
+    padding: 10px; /* Padding for cells */
+    text-align: left; /* Left align text */
+  }
