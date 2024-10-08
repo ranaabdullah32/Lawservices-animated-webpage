@@ -24,6 +24,7 @@
         .hidden {
             top: -100px; 
         }
+
     </style>
 </head>
 <body>
@@ -58,7 +59,11 @@
                             <li>
                                 <a href="#" class="quote-button">Get A Quote</a>
                             </li>
+                            <li>
+                                 <button id="logout-btn">Logout</button>
+                            </li>
                         </ul>
+                       
                     </div>
                 </div>
             </div>
@@ -114,6 +119,7 @@
                             <a class="nav-link" href="#">Contact</a>
                         </li>
                     </ul>
+                   
                     <div class="search-container">
                         <a class="search-icon" href="#" id="searchDropdownToggle">
                             <i class="fa fa-search"></i>
@@ -257,7 +263,12 @@
     <section class="about-us">
         <div class="container">
             <div class="row">
+
                 <h2 style="text-align: center ;margin-bottom: 20px;">Our Products</h2>
+                <div style="text-align: center;">
+                    <input type="number" id="search-bar" placeholder="Enter number of rows..." />
+                    <button id="apply-btn">Apply</button>
+                </div>
                 <table class="table table-dark p-3" >
                     <thead>
                       <tr>
@@ -1194,44 +1205,62 @@ window.onload = function checkStorage (){
    
 }
 //Fetch Data using Api
-const itemsPerPage = 10;
-let currentPage = 1;
-let allProducts = [];
+let itemsPerPage = 10; // Default value
+        let currentPage = 1;
+        let allProducts = [];
+        let filteredProducts = [];
 
-fetch('https://dummyjson.com/products')
-    .then(res => res.json())
-    .then(data => {
-        allProducts = data.products;
-        renderTable();
-        updatePagination();
-    });
+        fetch('https://dummyjson.com/products')
+            .then(res => res.json())
+            .then(data => {
+                allProducts = data.products;
+                filteredProducts = allProducts; // Initially, all products are filtered
+                renderTable();
+                updatePagination();
+            });
 
-function renderTable() {
-    const start = (currentPage - 1) * itemsPerPage;
-    const paginatedProducts = allProducts.slice(start, start + itemsPerPage);
-    document.getElementById('tablerow').innerHTML = paginatedProducts.map(product =>
-        `<tr><td>${product.id}</td><td>${product.category}</td><td>${product.rating}</td><td>${product.stock}</td><td>${product.price}</td></tr>`
-    ).join('');
-}
+        function renderTable() {
+            const start = (currentPage - 1) * itemsPerPage;
+            const paginatedProducts = filteredProducts.slice(start, start + itemsPerPage);
+            document.getElementById('tablerow').innerHTML = paginatedProducts.map(product =>
+                `<tr><td>${product.id}</td><td>${product.category}</td><td>${product.rating}</td><td>${product.stock}</td><td>${product.price}</td></tr>`
+            ).join('');
+        }
 
-function updatePagination() {
-    const totalPages = Math.ceil(allProducts.length / itemsPerPage);
-    document.getElementById('page-info').innerText = `Page ${currentPage} of ${totalPages}`;
-    document.getElementById('prev-btn').disabled = currentPage === 1;
-    document.getElementById('next-btn').disabled = currentPage === totalPages;
-}
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+            document.getElementById('page-info').innerText = `Page ${currentPage} of ${totalPages}`;
+            document.getElementById('prev-btn').disabled = currentPage === 1;
+            document.getElementById('next-btn').disabled = currentPage === totalPages;
+        }
 
-document.getElementById('prev-btn').onclick = () => {
-    if (currentPage > 1) currentPage--;
-    renderTable();
-    updatePagination();
-};
+        document.getElementById('prev-btn').onclick = () => {
+            if (currentPage > 1) currentPage--;
+            renderTable();
+            updatePagination();
+        };
 
-document.getElementById('next-btn').onclick = () => {
-    if (currentPage < Math.ceil(allProducts.length / itemsPerPage)) currentPage++;
-    renderTable();
-    updatePagination();
-};
+        document.getElementById('next-btn').onclick = () => {
+            if (currentPage < Math.ceil(filteredProducts.length / itemsPerPage)) currentPage++;
+            renderTable();
+            updatePagination();
+        };
+
+        document.getElementById('apply-btn').onclick = () => {
+            const input = document.getElementById('search-bar').value;
+            const parsedInput = parseInt(input, 10);
+            if (!isNaN(parsedInput) && parsedInput > 0) {
+                itemsPerPage = parsedInput; // Update items per page based on user input
+            } else {
+                itemsPerPage = 10; // Reset to default if input is invalid
+            }
+            currentPage = 1; // Reset to the first page when applying a new number
+            renderTable();
+            updatePagination();
+        };
+        document.getElementById('logout-btn').onclick = () =>  {
+              window.location.href = 'login.html' ;
+         }
 
 </script>
 

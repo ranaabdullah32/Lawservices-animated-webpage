@@ -1541,6 +1541,7 @@ h2.caption-heading {
         height: 36px;
     }
   }
+  /*Scroll to top icon*/
   .scroll-top {
     width: 55px;
     height: 55px;
@@ -1563,6 +1564,7 @@ h2.caption-heading {
     margin-left: 38%;
     margin-top: 33%;
 }
+/*API TABLE*/
 .table-dark {
     background-color: #000 !important; /* Black background for the table */
     color: #fff !important; /* White text color */
@@ -1592,3 +1594,52 @@ h2.caption-heading {
     padding: 10px; /* Padding for cells */
     text-align: left; /* Left align text */
   }
+  /* TABLE Pagination buttons */
+button[id$="-btn"] {
+    background-color: #FF3737; /* dark red background */
+    color: #FFFFFF; /* white text */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  button[id$="-btn"]:hover {
+    background-color:darkred /* bright red hover effect */
+  }
+  
+  button[id$="-btn"]:disabled {
+    background-color: #333333; /* dark gray disabled background */
+    color: #AAAAAA; /* light gray disabled text */
+    cursor: not-allowed;
+  }
+  
+  /* Page info */
+  #page-info {
+    font-size: 16px;
+    color: black; /* white text */
+    margin: 0 10px;
+  }
+  #search-bar {
+    padding: 10px;
+    font-size: 16px;
+    width: 200px; /* Set a width for the search bar */
+    margin-right: 10px; /* Spacing between the input and button */
+    border: 2px solid #FF3737; /* Border style */
+    border-radius: 4px; /* Rounded corners */
+    margin-bottom: 2%;
+}
+
+#apply-btn {
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #e4353a; /* Bootstrap primary color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+#apply-btn:hover {
+    background-color: black; /* Darker blue on hover */
+}
